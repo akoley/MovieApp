@@ -1,5 +1,6 @@
 github "Alamofire/Alamofire" "4.7.3"
 github "Hearst-DD/ObjectMapper" "3.3.0"
-github "ReactiveX/RxSwift" "4.3.0"
-github "onevcat/Kingfisher" "4.9.0"
+github "ReactiveX/RxSwift" "4.3.1"
+github "ashleymills/Reachability.swift" "v4.2.1"
+github "onevcat/Kingfisher" "4.10.0"
 github "tristanhimmelman/AlamofireObjectMapper" "5.1.0"

@@ -23,7 +23,7 @@ class ModelManager: NSManagedObject {
         super.init(entity: entity!, insertInto: context)
     }
     
-    fileprivate override init(entity: NSEntityDescription,
+    private override init(entity: NSEntityDescription,
                               insertInto context: NSManagedObjectContext?) {
         super.init(entity: entity, insertInto: context)
     }

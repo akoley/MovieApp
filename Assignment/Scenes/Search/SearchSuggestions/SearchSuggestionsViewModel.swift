@@ -64,14 +64,9 @@ class SearchSuggestionsViewModel: SearchSuggestionsViewModelProtocol {
     }
     
     func queryChanged(query: String) {
-        
-//        APIClient.getSearchSuggestions(query: query) { [weak self] result in
-//            switch result {
-//            case let .success(response):
-//                self?.searchSuggestions.value = response.data?.suggestions ?? []
-//            case let .failure(error):
-//                print(error.localizedDescription)
-//            }
-//        }
+        let searchSuggestions = CoreDataHandler.getSharedInstance().fetchRecentSearchTermsContaining(
+            searchTerm: query,
+            inReverseOrder: true)
+        self.searchSuggestions.value = searchSuggestions
     }
 }

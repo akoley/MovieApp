@@ -58,8 +58,9 @@ class SearchViewModel: SearchViewModelProtocol {
         self.searchResultsVM = searchResultsVM
         
         searchResultsVM.addToRecentlySearched.subscribe(
-            onNext: { [weak self] (searchTerm) in
-                self?.updateRecentlySearchedTerms(query: searchTerm)
+            onNext: { [weak self] searchTerm in
+                guard let `self` = self else { return }
+                `self`.updateRecentlySearchedTerms(query: searchTerm)
         }).disposed(by: disposeBag)
         
         searchSuggestionsVM.suggestionSelected
@@ -67,13 +68,6 @@ class SearchViewModel: SearchViewModelProtocol {
                 guard let `self` = self else { return }
                 `self`.performSearch(query: suggestion)
         }).disposed(by: disposeBag)
-        
-//        searchSuggestionsVM.suggestionSelected.subscribe(
-//            onNext: { [weak self] (suggestion) in
-//            guard let `self` = self, let suggestion = suggestion else { return }
-//            `self`.performSearch(query: sug) suggestionSelected.onNext(suggestion)
-//            self?.performSearch(query: suggestion)
-//        }).disposed(by: disposeBag)
         
         searchResultsVM.movieSelected.subscribe(onNext: {[weak self] (movieInfo) in
             print("I just got tapped")

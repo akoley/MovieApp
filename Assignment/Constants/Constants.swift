@@ -22,7 +22,8 @@ struct Constants {
     }
     
     struct ErrorString {
-        static let SomethingWentWrong = "Oops, Something went wrong. Please try again."
+        static let SomethingWentWrong = "Bummer! Something went wrong. Please try again."
+        static let NoInternetConnection = "No internet connection!"
     }
     
     struct FontNameConstants {
@@ -33,6 +34,8 @@ struct Constants {
     
     struct StringConstants {
         static let Search = "Search"
+        static let Retry = "Retry"
+        static let NoResults = "No results found for"
     }
 
     struct CoreData {
@@ -50,6 +53,10 @@ struct Constants {
     }
     
     struct MovieListing {}
+    
+    enum ImageAssets: String, ImageAssetsConvertible {
+        case noNetwork
+    }
     
     enum TabBarIcons: String, ImageAssetsConvertible {
         case home

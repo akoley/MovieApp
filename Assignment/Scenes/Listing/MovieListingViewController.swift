@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-class MovieListingViewController: UIViewController {
+class MovieListingViewController: ViewController {
     let edgeInset: CGFloat = 10
     let interItemSpacing: CGFloat = 10
     let lineSpacing: CGFloat = 10
@@ -23,7 +23,7 @@ class MovieListingViewController: UIViewController {
     private var collectionViewFlowLayout: UICollectionViewFlowLayout!
     
     override func loadView() {
-        view = Bundle.main.loadNibNamed("MovieListingViewController", owner: self, options: nil)?.first as! UIView
+        view = (Bundle.main.loadNibNamed("MovieListingViewController", owner: self, options: nil)?.first as! UIView)
     }
     
     override func viewDidLoad() {
@@ -32,13 +32,23 @@ class MovieListingViewController: UIViewController {
         initMovieListingViewController()
     }
     
+    override func showNoNetworkPrompt(_ notification: Notification!) {
+        super.showNoNetworkPrompt(notification)
+    }
+    
+    override func hideNoNetworkPrompt(_ notification: Notification!) {
+        super.hideNoNetworkPrompt(notification)
+    }
+    
+    override func _refreshButtonPressed(_ sender: AnyObject) {
+        super._refreshButtonPressed(sender)
+    }
+    
     private func initMovieListingViewController() {
         collectionView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        collectionViewFlowLayout = collectionView.collectionViewLayout as! UICollectionViewFlowLayout
-        //collectionViewFlowLayout.estimatedItemSize = CGSize(width: 172.5, height: 300)
+        collectionViewFlowLayout = (collectionView.collectionViewLayout as! UICollectionViewFlowLayout)
         collectionViewFlowLayout.minimumLineSpacing = lineSpacing
         collectionViewFlowLayout.minimumInteritemSpacing = interItemSpacing
-        
         registerCells()
         bindUI()
     }
@@ -55,6 +65,13 @@ class MovieListingViewController: UIViewController {
         collectionView.rx.itemSelected
             .bind(to: viewModel.itemSelected)
             .disposed(by: disposeBag)
+        
+        viewModel.errorObservable.subscribe(onNext: {[weak self] errorData in
+            guard let `self` = self else { return }
+            `self`.showMessage(errorData: errorData)
+            
+        }).disposed(by: disposeBag)
+        
         viewModel?.searchResultsObservable.bind(to: collectionView.rx.items) { (collectionView, row, item) in
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "MovieListingGridCell",

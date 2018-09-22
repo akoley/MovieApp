@@ -73,18 +73,18 @@ class SearchViewController: UIViewController {
     }
     
     func switchTo(viewController: UIViewController) {
-        guard !childViewControllers.contains(viewController) else {
-            containerView.bringSubview(toFront: viewController.view)
+        guard !children.contains(viewController) else {
+            containerView.bringSubviewToFront(viewController.view)
             return
         }
-        addChildViewController(viewController)
+        addChild(viewController)
         
         // make sure that the child view controller's view is the right size
         viewController.view.frame = containerView.bounds
         containerView.addSubview(viewController.view)
         
         // you must call this at the end per Apple's documentation
-        viewController.didMove(toParentViewController: self)
+        viewController.didMove(toParent: self)
     }
 }
 

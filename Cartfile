@@ -3,3 +3,4 @@ github "tristanhimmelman/AlamofireObjectMapper" ~> 5.0
 github "Hearst-DD/ObjectMapper" ~> 3.3
 github "ReactiveX/RxSwift"
 github "onevcat/Kingfisher"
+github "ashleymills/Reachability.swift"

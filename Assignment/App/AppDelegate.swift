@@ -18,7 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     lazy var appCoordinator = AppCoordinator(router: self.appRouter)
         
     func application(_: UIApplication,
-                         didFinishLaunchingWithOptions _: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+                     didFinishLaunchingWithOptions _: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
             window = UIWindow(frame: UIScreen.main.bounds)
             window?.rootViewController = appCoordinator.toPresentable()
             window?.backgroundColor = .white

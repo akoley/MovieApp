@@ -31,7 +31,7 @@ class CoreDataHandler: NSObject {
         initializeCoreDataHandler()
     }
     
-    fileprivate func initializeCoreDataHandler() {
+    private func initializeCoreDataHandler() {
         let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: Constants.CoreData.Models.ModelManagerEntity)
         do {
             let fetchedObjects = try self.managedObjectContext.fetch(fetchRequest) as! [ModelManager]

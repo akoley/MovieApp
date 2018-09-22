@@ -16,17 +16,19 @@ protocol MovieListingViewModelProtocol: class {
     var addToRecentlySearched: PublishSubject<String> { get }
     var movieSelected: PublishSubject<MovieListingDetails> { get }
     var itemSelected: PublishSubject<IndexPath> { get }
+    var errorObservable: PublishSubject<ErrorPageData> { get }
+    
     func getMovies(query: String, page: Int)
 }
 
 class MovieListingViewModel: MovieListingViewModelProtocol {
+    var errorObservable = PublishSubject<ErrorPageData>()
     var searchResultsObservable: Observable<[MovieListingCellViewModel]>
     let loadPage = PublishSubject<Int>()
     let addToRecentlySearched = PublishSubject<String>()
     let itemSelected = PublishSubject<IndexPath>()
     let movieSelected = PublishSubject<MovieListingDetails>()
     var movieListingResponse: MovieListingResponse?
-    var data = Variable<[MovieListingCellViewModel]>([])
     var searchTerm: String?
     let disposeBag = DisposeBag()
     let searchResultsResponse = Variable<[MovieListingCellViewModel]>([])
@@ -61,9 +63,22 @@ class MovieListingViewModel: MovieListingViewModelProtocol {
                     self?.searchResultsResponse.value += response.results.map({ (movie) -> MovieListingCellViewModel in
                         MovieListingCellViewModel(movie: movie)
                     })
+                } else {
+                    let errorData = ErrorPageData.init(
+                        errorMessage: Constants.StringConstants.NoResults
+                            + "\'" + query + "\'",
+                        errorImage: nil,
+                        shouldShowRetryButton: false,
+                        shouldShowMessage: true)
+                    self?.errorObservable.onNext(errorData)
                 }
             case let .failure(error):
-                print(error.localizedDescription)
+                let errorData = ErrorPageData.init(
+                    errorMessage: error.localizedDescription,
+                    errorImage: Constants.ImageAssets.noNetwork.image,
+                    shouldShowRetryButton: true,
+                    shouldShowMessage: true)
+                self?.errorObservable.onNext(errorData)
             }
         }
     }

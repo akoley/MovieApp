@@ -80,7 +80,7 @@ public final class Router: NSObject, RouterType, UINavigationControllerDelegate 
         }
     }
     
-    fileprivate func runCompletion(for controller: UIViewController) {
+    private func runCompletion(for controller: UIViewController) {
         guard let completion = completions[controller] else { return }
         completion()
         completions.removeValue(forKey: controller)

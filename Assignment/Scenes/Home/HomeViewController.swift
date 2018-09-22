@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 import UIKit
 
-class HomeViewController: UIViewController {
+class HomeViewController: ViewController {
     @IBOutlet var searchBtn: UIBarButtonItem!
     var btn: UIButton!
     
