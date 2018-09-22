@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Search Suggestions Table View Controller-->
+        <scene sceneID="wZm-sS-PWg">
+            <objects>
+                <tableViewController storyboardIdentifier="SearchSuggestionsTableViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="QlT-TA-wK2" customClass="SearchSuggestionsTableViewController" customModule="Assignment" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Zqr-GT-mfu">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <connections>
+                            <outlet property="dataSource" destination="QlT-TA-wK2" id="pho-A0-q5f"/>
+                            <outlet property="delegate" destination="QlT-TA-wK2" id="cSq-Tf-9Hq"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qdS-qa-0CD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-716" y="-174"/>
+        </scene>
+        <!--Search View Controller-->
+        <scene sceneID="Jd4-DK-nFq">
+            <objects>
+                <viewController storyboardIdentifier="SearchViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="UIX-nc-4xb" customClass="SearchViewController" customModule="Assignment" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="c33-Uw-7HL">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pBl-Wy-uCt">
+                                <rect key="frame" x="0.0" y="20" width="375" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="60" id="rtI-Gn-sNE"/>
+                                </constraints>
+                                <textInputTraits key="textInputTraits"/>
+                                <scopeButtonTitles>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                </scopeButtonTitles>
+                            </searchBar>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8Pp-P8-XTk">
+                                <rect key="frame" x="0.0" y="80" width="375" height="587"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="qUr-Vd-3HC" firstAttribute="trailing" secondItem="pBl-Wy-uCt" secondAttribute="trailing" id="ORP-gE-sfQ"/>
+                            <constraint firstItem="qUr-Vd-3HC" firstAttribute="bottom" secondItem="8Pp-P8-XTk" secondAttribute="bottom" id="aJe-Ix-jhZ"/>
+                            <constraint firstItem="8Pp-P8-XTk" firstAttribute="leading" secondItem="qUr-Vd-3HC" secondAttribute="leading" id="afb-Y1-03g"/>
+                            <constraint firstItem="8Pp-P8-XTk" firstAttribute="top" secondItem="pBl-Wy-uCt" secondAttribute="bottom" id="dG2-hT-Rhy"/>
+                            <constraint firstItem="pBl-Wy-uCt" firstAttribute="leading" secondItem="qUr-Vd-3HC" secondAttribute="leading" id="g5A-yh-6lr"/>
+                            <constraint firstItem="pBl-Wy-uCt" firstAttribute="top" secondItem="qUr-Vd-3HC" secondAttribute="top" id="q2a-7T-bnp"/>
+                            <constraint firstItem="qUr-Vd-3HC" firstAttribute="trailing" secondItem="8Pp-P8-XTk" secondAttribute="trailing" id="vZK-2G-qy4"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="qUr-Vd-3HC"/>
+                    </view>
+                    <connections>
+                        <outlet property="containerView" destination="8Pp-P8-XTk" id="vaV-zQ-X3Y"/>
+                        <outlet property="searchBar" destination="pBl-Wy-uCt" id="lWd-5w-DrU"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mIc-7t-o5Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1719" y="-183"/>
+        </scene>
+    </scenes>
+</document>
