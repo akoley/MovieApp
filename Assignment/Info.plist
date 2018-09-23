@@ -43,6 +43,8 @@
 	</array>
 	<key>ApiBaseURL</key>
 	<string>$(API_BASE_URL)</string>
+	<key>ImageBaseURL</key>
+	<string>$(IMAGE_BASE_URL)</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>

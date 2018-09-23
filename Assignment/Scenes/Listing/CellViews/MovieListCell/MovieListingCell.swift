@@ -23,7 +23,6 @@ class MovieListingCell: UICollectionViewCell {
     private func initMovieListingCell() {
         titleLabel.text = nil
         releaseDateLabel.text = nil
-        //contentWidthConstraint.constant = 172.5
     }
     
     func configureCell(viewModel: MovieListingCellViewModelProtocol) {
@@ -49,21 +48,9 @@ class MovieListingCell: UICollectionViewCell {
         
         let imageHeight = cellWidth * 1.5
         cellHeight += imageHeight
-        
-        if isGridOrientation {
-            cellHeight += UIFont.MrEavesXlModOTBoldFont(fontSize: 16.0).lineHeight // Product Name
-        } else {
-            cellHeight += UIFont.MrEavesXlModOTBoldFont(fontSize: 18.0).lineHeight // Product Name
-        }
-        
-        cellHeight += UIFont.MrEavesXlModOTRegularFont(fontSize: 16).lineHeight // time
-        
-        if isGridOrientation {
-            cellHeight += 12
-        } else {
-            cellHeight += 12
-        }
-        cellHeight += 24.0
+        cellHeight += UIFont.MrEavesXlModOTBoldFont(fontSize: 18.0).lineHeight * 3
+        cellHeight += UIFont.MrEavesXlModOTRegularFont(fontSize: 16).lineHeight// time
+        cellHeight += 12 // Spacing between components
         return CGSize(width: cellWidth, height: cellHeight)
     }
 }

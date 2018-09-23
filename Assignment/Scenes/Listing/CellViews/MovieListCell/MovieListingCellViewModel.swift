@@ -31,7 +31,7 @@ struct MovieListingCellViewModel: MovieListingCellViewModelProtocol {
         name = movie.title
         subName = movie.releaseDate
         if let image = movie.posterPath {
-            imageUrl = URL(string: "http://image.tmdb.org/t/p/w92/" + image)
+            imageUrl = URL(string: Constants.Api.imageBaseURL + "/t/p/w92/" + image)
         }
     }
 }

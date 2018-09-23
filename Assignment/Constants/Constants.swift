@@ -19,6 +19,15 @@ struct Constants {
             return ""
         }()
         
+        static let imageBaseURL: String = {
+            let path = Bundle.main.path(forResource: "Info", ofType: "plist")!
+            if let dict = NSDictionary(contentsOfFile: path) {
+                // swiftlint:disable:next force_cast
+                return dict["ImageBaseURL"] as! String
+            }
+            return ""
+        }()
+        
     }
     
     struct ErrorString {
