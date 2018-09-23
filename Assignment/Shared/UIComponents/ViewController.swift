@@ -11,12 +11,9 @@ import Reachability
 
 class ViewController: UIViewController, UIGestureRecognizerDelegate {
     
-    static let NAVIGATION_BAR_PROMPT_HEIGHT = 30
-    
     private static let spaceBetweenMessageLabelAndRetryButton: CGFloat = 40.0
     
     @IBOutlet internal var activityIndicatorView: RUIActivityIndicatorView!
-    //internal var activityModalView : ULModalActivityView!
     private var networkImage: UIImageView!
     private var messageLabel: UILabel!
     private var refreshButton: UIButton!
@@ -185,6 +182,12 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         }
     }
     
+    func hideMessage() {
+        messageLabel.isHidden = true
+        networkImage.isHidden = true
+        refreshButton.isHidden = true
+    }
+    
     private func startInternetReachability() {
         
         do {
@@ -201,9 +204,7 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     @objc func reachabilityChanged(notification: Notification) {
-        
-        let reachability = notification.object as! Reachability
-        
+        reachability = notification.object as? Reachability
         switch reachability.connection {
         case .wifi, .cellular:
             hideNoNetworkPrompt(notification)
@@ -211,21 +212,6 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
             showNoNetworkPrompt(notification)
         }
     }
-    
-//    @objc internal func _checkNetworkStatus(_ notification: Notification!) {
-//        switch reachability.connection {
-//        case .none:
-//            showNoNetworkPrompt(notification)
-//            if _isReachabilityRecieved {
-//                _isReachabilityRecieved = false
-//            }
-//        case .wifi, .cellular:
-//            if !_isReachabilityRecieved {
-//
-//                _isReachabilityRecieved = true
-//            }
-//        }
-//    }
     
     internal func showNoNetworkPrompt(_ notification: Notification!) {
         self.navigationItem.prompt = Constants.ErrorString.NoInternetConnection
@@ -235,5 +221,3 @@ class ViewController: UIViewController, UIGestureRecognizerDelegate {
         self.navigationItem.prompt = nil
     }
 }
-
-

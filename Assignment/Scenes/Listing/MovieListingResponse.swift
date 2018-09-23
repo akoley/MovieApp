@@ -10,10 +10,10 @@ import Foundation
 import ObjectMapper
 
 struct MovieListingResponse: Mappable {
-    private(set) var page = 0
-    private(set) var totalResults = 0
-    private(set) var totalPages = 0
-    private(set) var results: [MovieListingDetails] = []
+    var page = 0
+    var totalResults = 0
+    var totalPages = 0
+    var results: [MovieListingDetails] = []
     
     init?(map: Map) {
         

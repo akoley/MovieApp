@@ -35,7 +35,7 @@ struct Constants {
     struct StringConstants {
         static let Search = "Search"
         static let Retry = "Retry"
-        static let NoResults = "No results found for"
+        static let NoResults = "No results found for "
     }
 
     struct CoreData {

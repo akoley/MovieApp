@@ -42,6 +42,7 @@ class MovieListingViewController: ViewController {
     
     override func _refreshButtonPressed(_ sender: AnyObject) {
         super._refreshButtonPressed(sender)
+        viewModel.getListingInfo()
     }
     
     private func initMovieListingViewController() {
@@ -73,6 +74,7 @@ class MovieListingViewController: ViewController {
         }).disposed(by: disposeBag)
         
         viewModel?.searchResultsObservable.bind(to: collectionView.rx.items) { (collectionView, row, item) in
+            self.hideMessage()
             let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: "MovieListingGridCell",
                 for: IndexPath(row: row, section: 0)) as! MovieListingCell

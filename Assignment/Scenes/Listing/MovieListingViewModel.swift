@@ -8,6 +8,7 @@
 
 import Foundation
 import RxSwift
+import Alamofire
 
 protocol MovieListingViewModelProtocol: class {
     var searchResultsObservable: Observable<[MovieListingCellViewModel]> { get }
@@ -22,6 +23,7 @@ protocol MovieListingViewModelProtocol: class {
 }
 
 class MovieListingViewModel: MovieListingViewModelProtocol {
+    let disposeBag = DisposeBag()
     var errorObservable = PublishSubject<ErrorPageData>()
     var searchResultsObservable: Observable<[MovieListingCellViewModel]>
     let loadPage = PublishSubject<Int>()
@@ -29,16 +31,18 @@ class MovieListingViewModel: MovieListingViewModelProtocol {
     let itemSelected = PublishSubject<IndexPath>()
     let movieSelected = PublishSubject<MovieListingDetails>()
     var movieListingResponse: MovieListingResponse?
-    var searchTerm: String?
-    let disposeBag = DisposeBag()
     let searchResultsResponse = Variable<[MovieListingCellViewModel]>([])
+    
+    internal var searchTerm: String?
+    private var currentPage = 0
+    private var _request : Request!
     
     init() {
         searchResultsObservable = searchResultsResponse.asObservable()
         loadPage.subscribe(onNext: {[weak self] page in
-            guard let `self` = self, let searchTerm = self.searchTerm else { return }
-            `self`.getMovies(query: searchTerm, page: page)
-            
+            guard let `self` = self else { return }
+            `self`.currentPage = page
+            `self`.getListingInfo()
         }).disposed(by: disposeBag)
         itemSelected
             .map { [weak self] in self?.movieListingResponse?.results[$0.row]}
@@ -49,13 +53,39 @@ class MovieListingViewModel: MovieListingViewModelProtocol {
             .disposed(by: disposeBag)
     }
     
+    func getListingInfo() {
+        if movieListingResponse != nil
+            && searchResultsResponse.value.count >= (movieListingResponse?.totalResults)! {
+            return
+        }
+        
+        if(_request != nil) {
+            _request.cancel()
+            _request = nil
+        }
+        
+        if searchTerm?.isEmpty == false {
+            getMovies(query: searchTerm!, page: currentPage)
+        }
+    }
+    
+    private func convertResponseToMovieResponse(response: MovieListingResponse) {
+        if movieListingResponse != nil {
+            movieListingResponse?.page = response.page
+            movieListingResponse?.results += response.results
+        } else {
+            movieListingResponse = response
+        }
+    }
+    
     func getMovies(query: String, page: Int) {
         searchTerm = query
+        currentPage = page
         APIClient.getSearchResults(searchTerm: query, page: page) { [weak self] result in
             switch result {
             case let .success(response):
                 if response.results.isEmpty == false {
-                    self?.movieListingResponse = response
+                    self?.convertResponseToMovieResponse(response: response)
                     self?.addToRecentlySearched.onNext(query)
                     if page <= 1 {
                         self?.searchResultsResponse.value = []
@@ -64,6 +94,7 @@ class MovieListingViewModel: MovieListingViewModelProtocol {
                         MovieListingCellViewModel(movie: movie)
                     })
                 } else {
+                    self?.searchResultsResponse.value = []
                     let errorData = ErrorPageData.init(
                         errorMessage: Constants.StringConstants.NoResults
                             + "\'" + query + "\'",
@@ -73,6 +104,7 @@ class MovieListingViewModel: MovieListingViewModelProtocol {
                     self?.errorObservable.onNext(errorData)
                 }
             case let .failure(error):
+                self?.searchResultsResponse.value = []
                 let errorData = ErrorPageData.init(
                     errorMessage: error.localizedDescription,
                     errorImage: Constants.ImageAssets.noNetwork.image,
